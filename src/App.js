@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./App.css"; // Ensure you have appropriate styles
 
 function App() {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -10,65 +10,65 @@ function App() {
     dob: "",
   });
 
-  const handleOpenModal = () => setModalOpen(true);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-  const handleCloseModal = (e) => {
-    if (e.target.className === "modal") {
-      setModalOpen(false);
+  const handleCloseModal = (event) => {
+    // Close the modal only if the user clicks outside the modal content
+    if (event.target.className === "modal") {
+      setIsModalOpen(false);
     }
   };
 
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
 
   const handleSubmit = () => {
     const { username, email, phone, dob } = formData;
 
-    // Validation for empty fields
     if (!username || !email || !phone || !dob) {
-      alert("All fields are required. Please fill out all fields.");
+      alert("All fields are required.");
       return;
     }
 
-    // Email validation
     if (!email.includes("@")) {
       alert("Invalid email. Please check your email address.");
       return;
     }
 
-    // Phone validation
-    if (!/^\d{10}$/.test(phone)) {
+    if (phone.length !== 10 || isNaN(phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
       return;
     }
 
-    // DOB validation
-    const currentDate = new Date();
-    const enteredDate = new Date(dob);
-    if (enteredDate > currentDate) {
-      alert("Invalid date of birth. Date cannot be in the future.");
+    const today = new Date();
+    const dobDate = new Date(dob);
+    if (dobDate > today) {
+      alert("Invalid date of birth. Date of birth cannot be in the future.");
       return;
     }
 
-    // Close modal and reset form
     alert("Form submitted successfully!");
-    setModalOpen(false);
-    setFormData({
-      username: "",
-      email: "",
-      phone: "",
-      dob: "",
-    });
+    setIsModalOpen(false);
+    setFormData({ username: "", email: "", phone: "", dob: "" });
   };
 
   return (
     <div className="app">
-      <h1> User Details Modal</h1>
-      {!isModalOpen && (
-        <button onClick={handleOpenModal}>Open Form</button>
-      )}
+      <div className="modal">
+        <div className="modal-content">
+          <h1>User Detail Modal</h1> {/* Heading */}
+          {!isModalOpen && (
+            <button onClick={handleOpenModal}>Open Form</button>
+          )}
+        </div>
+      </div>
 
       {isModalOpen && (
         <div className="modal" onClick={handleCloseModal}>
