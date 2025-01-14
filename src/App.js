@@ -10,17 +10,19 @@ function App() {
     dob: "",
   });
 
+  // Open the modal
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
+  // Close the modal when clicking outside of it
   const handleCloseModal = (event) => {
-    // Close the modal only if the user clicks outside the modal content
     if (event.target.className === "modal") {
       setIsModalOpen(false);
     }
   };
 
+  // Handle input change and update the form data
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData((prev) => ({
@@ -29,24 +31,31 @@ function App() {
     }));
   };
 
-  const handleSubmit = () => {
+  // Handle form submission with validation
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     const { username, email, phone, dob } = formData;
 
-    if (!username || !email || !phone || !dob) {
-      alert("All fields are required.");
+    // Check if username is empty
+    if (!username) {
+      alert("Please fill out the username.");
       return;
     }
 
+    // Check if email is valid
     if (!email.includes("@")) {
       alert("Invalid email. Please check your email address.");
       return;
     }
 
+    // Check if phone number has 10 digits
     if (phone.length !== 10 || isNaN(phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
       return;
     }
 
+    // Check if date of birth is a valid past date
     const today = new Date();
     const dobDate = new Date(dob);
     if (dobDate > today) {
@@ -54,6 +63,7 @@ function App() {
       return;
     }
 
+    // If all validations pass, alert success
     alert("Form submitted successfully!");
     setIsModalOpen(false);
     setFormData({ username: "", email: "", phone: "", dob: "" });
@@ -61,54 +71,63 @@ function App() {
 
   return (
     <div className="app">
-      <div className="modal">
-        <div className="modal-content">
-          <h1>User Detail Modal</h1> {/* Heading */}
-          {!isModalOpen && (
-            <button onClick={handleOpenModal}>Open Form</button>
-          )}
+      {/* Main content with button to open modal */}
+      {!isModalOpen && (
+        <div className="main-content">
+          <h1>User Detail Modal</h1>
+          <button onClick={handleOpenModal}>Open Form</button>
         </div>
-      </div>
+      )}
 
+      {/* Modal */}
       {isModalOpen && (
         <div className="modal" onClick={handleCloseModal}>
           <div className="modal-content">
             <h2>Fill the Form</h2>
             <form>
+              {/* Username Field */}
               <label htmlFor="username">Username:</label>
               <input
                 type="text"
                 id="username"
                 value={formData.username}
                 onChange={handleInputChange}
+                required
               />
 
+              {/* Email Field */}
               <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 id="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                required
               />
 
+              {/* Phone Field */}
               <label htmlFor="phone">Phone:</label>
               <input
                 type="text"
                 id="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
+                required
               />
 
+              {/* Date of Birth Field */}
               <label htmlFor="dob">Date of Birth:</label>
               <input
                 type="date"
                 id="dob"
                 value={formData.dob}
                 onChange={handleInputChange}
+                required
               />
 
+              {/* Submit Button */}
               <button
-                type="button"
+                type="submit"
                 className="submit-button"
                 onClick={handleSubmit}
               >
