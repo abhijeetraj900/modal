@@ -102,7 +102,7 @@ function App() {
                 id="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                required
+                 required
               />
 
               {/* Phone Field */}
