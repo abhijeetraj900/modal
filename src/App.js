@@ -45,13 +45,13 @@ function App() {
 
     // Check if email is valid
     if (!email.includes("@")) {
-      alert("Invalid email. Please check your email address.");
+      alert("Invalid email");
       return;
     }
 
     // Check if phone number has 10 digits
     if (phone.length !== 10 || isNaN(phone)) {
-      alert("Invalid phone number. Please enter a 10-digit phone number.");
+      alert("Invalid phone number");
       return;
     }
 
@@ -59,7 +59,7 @@ function App() {
     const today = new Date();
     const dobDate = new Date(dob);
     if (dobDate > today) {
-      alert("Invalid date of birth. Date of birth cannot be in the future.");
+      alert("Invalid date of birth");
       return;
     }
 
