@@ -34,40 +34,41 @@ function App() {
   // Handle form submission with validation
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
     const { username, email, phone, dob } = formData;
-
-    // Check if username is empty
-    if (!username) {
-      alert("Please fill out the username.");
-      return;
-    }
-
-    // Check if email is valid
-    if (!email.includes("@")) {
+  
+    // Validate email if filled
+    if (email && !email.includes("@")) {
       alert("Invalid email");
       return;
     }
-
-    // Check if phone number has 10 digits
-    if (phone.length !== 10 || isNaN(phone)) {
+  
+    // Validate phone if filled
+    const phoneRegex = /^\d{10}$/;
+    if (phone && !phoneRegex.test(phone)) {
       alert("Invalid phone number");
       return;
     }
-
-    // Check if date of birth is a valid past date
+  
+    // Validate date of birth if filled
     const today = new Date();
     const dobDate = new Date(dob);
-    if (dobDate > today) {
+    if (dob && dobDate > today) {
       alert("Invalid date of birth");
       return;
     }
-
-    // If all validations pass, alert success
+  
+    // Validate username only if present
+    if (!username.trim()) {
+      alert("Please fill out the username.");
+      return;
+    }
+  
     alert("Form submitted successfully!");
     setIsModalOpen(false);
     setFormData({ username: "", email: "", phone: "", dob: "" });
   };
+  
 
   return (
     <div className="app">
