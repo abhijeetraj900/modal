@@ -74,7 +74,7 @@ function App() {
       {/* Main content with button to open modal */}
       {!isModalOpen && (
         <div className="main-content">
-          <h1>User Detail Modal</h1>
+          <h1>User Details Modal</h1>
           <button onClick={handleOpenModal}>Open Form</button>
         </div>
       )}
@@ -83,7 +83,7 @@ function App() {
       {isModalOpen && (
         <div className="modal" onClick={handleCloseModal}>
           <div className="modal-content">
-            <h2>Fill the Form</h2>
+            <h2>Fill Details</h2>
             <form>
               {/* Username Field */}
               <label htmlFor="username">Username:</label>
@@ -96,7 +96,7 @@ function App() {
               />
 
               {/* Email Field */}
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Email Address:</label>
               <input
                 type="email"
                 id="email"
@@ -106,7 +106,7 @@ function App() {
               />
 
               {/* Phone Field */}
-              <label htmlFor="phone">Phone:</label>
+              <label htmlFor="phone">Phone Number:</label>
               <input
                 type="text"
                 id="phone"
